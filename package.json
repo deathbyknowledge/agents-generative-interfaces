@@ -1,0 +1,18 @@
+{
+  "name": "playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "alchemy deploy ./alchemy.run.ts",
+    "dev": "alchemy dev ./alchemy.run.ts",
+    "destroy": "alchemy destroy ./alchemy.run.ts"
+  },
+  "dependencies": {
+    "@cloudflare/workers-oauth-provider": "^0.0.6",
+    "agents": "https://pkg.pr.new/cloudflare/agents@415",
+    "alchemy": "^0.64.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0"
+  }
+}

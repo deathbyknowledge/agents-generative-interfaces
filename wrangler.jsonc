@@ -1,0 +1,32 @@
+{
+  "name": "generative-ui",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-08-26",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "AGENT",
+        "class_name": "GenUIAgent"
+      }
+    ]
+  },
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "generative-ui",
+      "preview_bucket_name": "generative-ui"
+    }
+  ],
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "GenUIAgent"
+      ],
+      "new_classes": []
+    }
+  ]
+}

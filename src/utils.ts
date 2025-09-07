@@ -30,6 +30,7 @@ export async function callJson<T>(
     temperature?: number;
     max_tokens?: number;
     max_completion_tokens?: number;
+    n?: number;
   }
 ): Promise<T> {
   let { retries, adhereToSchema, ...rest } = opts ?? {};
@@ -88,20 +89,32 @@ export async function callText(
     temperature?: number;
     max_tokens?: number;
     max_completion_tokens?: number;
+    n?: number;
   },
   retries?: number
-): Promise<string> {
+): Promise<string | string[]> {
+  let { n, ...rest } = opts ?? {};
+  n = n ?? 1;
   let retry = retries ?? 0;
   while (retry < 3) {
     try {
-      const completion = await openai.chat.completions.create({
-        model,
-        // temperature: opts?.temperature ?? 0.35,
-        // max_tokens: opts?.max_tokens ?? 8000,
-        ...opts,
-        messages,
-      });
-      return completion.choices[0]?.message?.content?.trim() ?? "";
+      const promises = [];
+      for (let i = 0; i < n; i++) {
+        promises.push(
+          openai.chat.completions.create({
+            model,
+            messages,
+            ...rest,
+          })
+        );
+      }
+      const completions = await Promise.all(promises);
+      if (n === 1) {
+        return completions[0]?.choices[0]?.message?.content?.trim() ?? "";
+      }
+      return completions.map(
+        (c) => c.choices[0]?.message?.content?.trim() ?? ""
+      );
     } catch (e) {
       console.error("Retrying callText", e);
       retry++;

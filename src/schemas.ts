@@ -50,10 +50,12 @@ export const REQUIREMENTS_ANALYSIS_SCHEMA = z.object({
     .describe(
       "Accessibility features including ARIA attributes, keyboard navigation, screen reader support, and color contrast requirements"
     ),
+  problemSolutionApproach: z
+    .array(z.string())
+    .describe("How the UI solves the user's problem, steps, success criteria"),
 });
 export type RequirementsAnalysis = z.infer<typeof REQUIREMENTS_ANALYSIS_SCHEMA>;
 
-// I can't believe the people from the paper formalized UI development!!!!! absolute fire
 /** Schema for a UI DSL */
 // Flattened schema without circular references or complex nested schemas
 // All objects are inlined to avoid $ref references in JSON Schema conversion

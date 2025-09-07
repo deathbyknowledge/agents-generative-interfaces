@@ -1194,14 +1194,14 @@ Your primary goal is to produce a single, complete HTML file based on the provid
 
 **Task Definition:**
 
-*   **IF an existing artifact is provided in <artifact>{artifactContent}</artifact> (and it's not empty or a placeholder like 'No artifact yet'):**
+*   **IF an existing artifact is provided in <artifact>...</artifact> (and it's not empty or a placeholder like 'No artifact yet'):**
     Your task is to **iteratively refine and improve** that existing artifact.
-    1.  Analyze the <artifact>{artifactContent}</artifact> against the <web-dsl> and <requirements-analysis>.
+    1.  Analyze the <artifact>...</artifact> against the <web-dsl> and <requirements-analysis>.
     2.  Identify specific areas for improvement: gaps in DSL adherence, missing content, incomplete features, or violations of implementation rules.
     3.  Rewrite and enhance the code to fully align with the <web-dsl>, meet all requirements, and fix any issues. Preserve and build upon correct parts of the existing artifact.
     Your output must be the **complete, new version** of the HTML artifact with all improvements integrated.
 
-*   **IF NO existing artifact is provided in <artifact>{artifactContent}</artifact> (i.e., it's empty or a placeholder indicating no prior artifact):**
+*   **IF NO existing artifact is provided in <artifact>...</artifact> (i.e., it's empty or a placeholder indicating no prior artifact):**
     Your task is to **generate a new web interface from scratch**.
     1.  Base your generation primarily on the <web-dsl> as the source of truth for structure, content, and interactivity.
     2.  Ensure all <requirements-analysis> are met.

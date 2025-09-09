@@ -1,4 +1,5 @@
 import type OpenAI from "openai";
+import { zodToJsonSchema } from "openai/_vendor/zod-to-json-schema/zodToJsonSchema.mjs";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { ZodType } from "zod";
 
@@ -36,6 +37,11 @@ export async function callJson<T>(
   let { retries, adhereToSchema, ...rest } = opts ?? {};
   adhereToSchema = adhereToSchema ?? true;
   let retry = 0;
+  if (!adhereToSchema)
+    messages[0].content =
+      messages[0].content +
+      "\n\nFollow this schema: " +
+      JSON.stringify(zodToJsonSchema(schema), null, 2);
   while (retry < (retries ?? 3)) {
     try {
       const completion = await openai.chat.completions.create({
@@ -89,32 +95,19 @@ export async function callText(
     temperature?: number;
     max_tokens?: number;
     max_completion_tokens?: number;
-    n?: number;
   },
   retries?: number
-): Promise<string | string[]> {
-  let { n, ...rest } = opts ?? {};
-  n = n ?? 1;
+): Promise<string> {
+  let { ...rest } = opts ?? {};
   let retry = retries ?? 0;
   while (retry < 3) {
     try {
-      const promises = [];
-      for (let i = 0; i < n; i++) {
-        promises.push(
-          openai.chat.completions.create({
-            model,
-            messages,
-            ...rest,
-          })
-        );
-      }
-      const completions = await Promise.all(promises);
-      if (n === 1) {
-        return completions[0]?.choices[0]?.message?.content?.trim() ?? "";
-      }
-      return completions.map(
-        (c) => c.choices[0]?.message?.content?.trim() ?? ""
-      );
+      const completion = await openai.chat.completions.create({
+        model,
+        messages,
+        ...rest,
+      });
+      return completion.choices[0]?.message?.content?.trim() ?? "";
     } catch (e) {
       console.error("Retrying callText", e);
       retry++;

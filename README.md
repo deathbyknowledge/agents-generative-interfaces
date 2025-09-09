@@ -1,6 +1,6 @@
 # Generative Interfaces on Cloudflare Agents
 
-Implementing this paper: https://salt-nlp.github.io/generative_interfaces/
+Implementing this paper: https://salt-nlp.github.io/generative_interfaces/  
 Code is adapted from the author's repository: https://github.com/SALT-NLP/GenUI
 
 The original implementation is built on top of LangGraph's `open-canvas` and requires a Supabase setup. Cloudflare makes it easier.
